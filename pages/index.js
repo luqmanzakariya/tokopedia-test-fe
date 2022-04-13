@@ -1,8 +1,23 @@
 import Head from 'next/head'
-import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
+import { useQuery } from '@apollo/client'
+import { GET_POKEMONS } from '../graphQL/queries'
 
 export default function Home() {
+  const { error, loading, data } = useQuery(GET_POKEMONS)
+  const [pokemonData, setPokemonData] = useState([])
+
+  useEffect(() => {
+    if (data){
+      setPokemonData(data.pokemons.results)
+    }
+  }, [data])
+
+  if (loading) return <nav>Loading...</nav>
+
+  else if (error) return <div>Oops something is wrong</div>
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +27,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <nav>Test</nav>
+        {pokemonData.map((val) => (<div key={val.id}>{val.name}</div>))}
       </main>
     </div>
   )
