@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import Image from "next/image";
 import BadgeId from "../../atoms/badge/id.jsx";
-import BadgeOwned from "../../atoms/badge/owned.jsx";
+// import BadgeOwned from "../../atoms/badge/owned.jsx";
 
 export default function Card({ data, onClick }) {
   const myLoader=({src})=>{
@@ -56,7 +56,7 @@ export default function Card({ data, onClick }) {
       <div className="card__inner">
         <div className="badge">
           <BadgeId>{data.id}</BadgeId>
-          <BadgeOwned>0</BadgeOwned>
+          {/* <BadgeOwned>0</BadgeOwned> */}
         </div>
         <div className="image__wrapper">
           <Image className="poke-image" loader={myLoader} alt={`${data.name}-img`} objectFit="contain" src={data.image} width={350} height={350} />
