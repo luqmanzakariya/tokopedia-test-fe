@@ -20,7 +20,7 @@ export default function ListPokemon({pokemonData, onClick}) {
       `}
     >
       {pokemonData.map((data) => (
-        <Card key={data.id} data={data} onClick={() => onClick(data.id)}  />
+        <Card key={data.id} data={data} onClick={() => onClick(data.name)}  />
       ))}
     </div>
   );
