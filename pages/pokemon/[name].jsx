@@ -1,3 +1,5 @@
+import { useAmp } from 'next/amp'
+export const config = { amp: "hybrid"}
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'

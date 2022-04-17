@@ -1,4 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Pokemon List
+**Pokemon List** is a mobile desktop responsive website where user view pokemon data and store store their favorit document. This project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+##  Check out the website: 
+[Pokemon Tokopedia](https://tokopedia.luqmanzakariya.com/)
+
+## graphql-pokeapi:
+[graphql-pokeapi](https://graphql-pokeapi.vercel.app/)
 
 ## Getting Started
 
