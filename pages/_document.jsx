@@ -65,7 +65,7 @@ class MyDocument extends Document {
 
           <link rel="apple-touch-icon" sizes="32x32" href="/favicon.ico" />
 
-          <link rel="manifest" href="/manifest.webmanifest" />
+          <link rel="manifest" href="/manifest.json" />
           <link rel="mask-icon" href="/logo.svg" color="#5bbad5" />
 
           <link rel="shortcut icon" href="/favicon.ico" />
