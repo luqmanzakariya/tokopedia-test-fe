@@ -2,6 +2,10 @@
 const withPWA = require('next-pwa')
 const nextConfig = withPWA({
   reactStrictMode: true,
+  trailingSlash: true,
+  images: {
+    loader: "custom"
+  },
   pwa: {
     dest: "public",
     register: true,
