@@ -2,24 +2,34 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import styles from '../styles/Home.module.css'
-import { useQuery } from '@apollo/client'
-import { GET_POKEMONS } from '../graphQL/queries'
-import HomeTemplates from '../components/templates/home/index.jsx'
+import ListTemplate from '../components/templates/list'
 
 export default function Home() {
   const router = useRouter()
-  const { error, loading, data } = useQuery(GET_POKEMONS)
   const [pokemonData, setPokemonData] = useState([])
 
-  const onClick = (id) => {
-    router.push(`/pokemon/${id}`)
+  const onClick = (pokemon, nickName) => {
+    let newPokemon = JSON.parse(localStorage.getItem("pokemons"));
+    if (newPokemon[pokemon]){
+      const idx = newPokemon[pokemon].findIndex(x => x.nickName == nickName)
+      newPokemon[pokemon].splice(idx, 1)
+      if (newPokemon[pokemon].length == 0) {
+        delete newPokemon[pokemon]
+      }
+    }
+
+    localStorage.setItem("pokemons", JSON.stringify(newPokemon))
+    setPokemonData(newPokemon)
   }
 
   useEffect(() => {
-    if (data){
-      setPokemonData(data.pokemons.results)
+    let currentData = JSON.parse(localStorage.getItem("pokemons"))
+    if (currentData){
+      setPokemonData(currentData)
+    } else {
+      setPokemonData([])
     }
-  }, [data])
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -29,11 +39,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeTemplates 
+      <ListTemplate 
         homeProps={{
           pokemonData,
-          loading,
-          error,
           onClick,
         }}
       />
