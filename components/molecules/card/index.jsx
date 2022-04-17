@@ -4,7 +4,7 @@ import Image from "next/image";
 import BadgeId from "../../atoms/badge/id.jsx";
 import BadgeOwned from "../../atoms/badge/owned.jsx";
 
-export default function Card({ data }) {
+export default function Card({ data, onClick }) {
   const myLoader=({src})=>{
     return `${data.image}`;
   }
@@ -12,7 +12,7 @@ export default function Card({ data }) {
   return (
     <div
       className="card hover"
-      // onClick={click}
+      onClick={onClick}
       css={css`
         background: white;
         width: 238px;

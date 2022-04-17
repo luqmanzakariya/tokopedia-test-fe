@@ -1,9 +1,8 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import { useQuery } from '@apollo/client'
-import { GET_POKEMONS } from '../graphQL/queries'
-import HomeTemplates from '../components/templates/home/index.jsx'
+import { GET_POKEMONS } from '../../graphQL/queries'
 
 export default function Home() {
   const { error, loading, data } = useQuery(GET_POKEMONS)
@@ -23,13 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <HomeTemplates 
-        homeProps={{
-          pokemonData,
-          loading,
-          error,
-        }}
-      />
+      <div>Pokemon Detail Page</div>
     </div>
   )
 }

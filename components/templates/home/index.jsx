@@ -3,7 +3,7 @@ import ListPokemon from "../../organism/listPokemon"
 export default function HomeContainer ({
   homeProps
 }) {
-  const { pokemonData, loading, error } = homeProps
+  const { pokemonData, loading, error, onClick } = homeProps
 
   if (loading) return <nav>Loading...</nav>
 
@@ -11,7 +11,10 @@ export default function HomeContainer ({
 
   return (
     <main>
-      <ListPokemon pokemonData={pokemonData} />
+      <ListPokemon 
+        pokemonData={pokemonData}
+        onClick={onClick}
+      />
     </main>
   )
 }

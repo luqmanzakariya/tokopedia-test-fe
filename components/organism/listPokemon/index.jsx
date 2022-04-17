@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import Card from "../../molecules/card/index.jsx";
 
-export default function ListPokemon({pokemonData}) {
+export default function ListPokemon({pokemonData, onClick}) {
   return (
     <div
       className="card hover"
@@ -19,7 +19,9 @@ export default function ListPokemon({pokemonData}) {
         }
       `}
     >
-      {pokemonData.map((data) => (<Card key={data.id} data={data}  />))}
+      {pokemonData.map((data) => (
+        <Card key={data.id} data={data} onClick={() => onClick(data.id)}  />
+      ))}
     </div>
   );
 }
