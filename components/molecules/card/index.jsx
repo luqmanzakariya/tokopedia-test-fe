@@ -11,7 +11,6 @@ export default function Card({ data, onClick }) {
 
   return (
     <div
-      className="card hover"
       onClick={onClick}
       css={css`
         background: white;

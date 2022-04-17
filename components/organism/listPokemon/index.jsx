@@ -5,7 +5,6 @@ import Card from "../../molecules/card/index.jsx";
 export default function ListPokemon({pokemonData, onClick}) {
   return (
     <div
-      className="card hover"
       css={css`
         padding: 20px;
         width: 100%;
