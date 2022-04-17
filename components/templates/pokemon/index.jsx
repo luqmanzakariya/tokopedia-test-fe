@@ -7,33 +7,14 @@ export default function PokemonTemplates ({
 }) {
   const { pokemonData, loading, error } = pokemonProps
   const [modalText, setModalText] = useState("Oops catch pokemon failed. Please try again")
+  const [nickName, setNickName] = useState("")
+  const [triggerInputNick, setTriggerNick] = useState(false)
 
   const onCatch = (e) => {
     e.preventDefault()
     const probability = Math.random() < 0.5
     if (probability){
-      const currentPokemon = localStorage.getItem("pokemons")
-      let currentData = JSON.parse(localStorage.getItem("pokemons"))
-      if (currentPokemon){
-        let flag = true
-        for (const property in currentData) {
-          if (currentData[pokemonData.name] === undefined){
-            currentData[pokemonData.name] = 1
-            flag = false
-          }
-        }
-
-        if (flag){
-          currentData[pokemonData.name]++
-        }
-
-        global.localStorage.setItem("pokemons", JSON.stringify(currentData))
-      } else {
-        global.localStorage.setItem("pokemons", JSON.stringify({ [pokemonData.name] : 1 }))
-      }
-      setModalText(`Contratulations, you've got ${pokemonData.name}. Currently you have ${currentData[pokemonData.name]} in your list`)
-      var modal = document.getElementById("myModal");
-      modal.style.display = "block";
+      setTriggerNick(true)
     } else {
       setModalText("Oops catch pokemon failed. Please try again")
       var modal = document.getElementById("myModal");
@@ -41,9 +22,61 @@ export default function PokemonTemplates ({
     }
   }
 
+  const onSavePokemon = (e) => {
+    e.preventDefault()
+    let currentData = JSON.parse(localStorage.getItem("pokemons"))
+    if (currentData){
+      let flag = true
+      for (const property in currentData) {
+        if (currentData[pokemonData.name] === undefined){
+          currentData[pokemonData.name] = [{
+            nickName,
+            pokemon: pokemonData.name,
+            image: pokemonData.sprites.front_default
+          }]
+          
+          flag = false
+        }
+      }
+
+      if (flag){
+        currentData[pokemonData.name].push({
+          nickName,
+          pokemon: pokemonData.name,
+          image: pokemonData.sprites.front_default
+        })
+      }
+
+      global.localStorage.setItem("pokemons", JSON.stringify(currentData))
+      setNickName("")
+      setTriggerNick(false)
+      setModalText(`Contratulations, you've got ${pokemonData.name}. Currently you have ${currentData[pokemonData.name].length} in your list`)
+    } else {
+      let payload = {
+        [pokemonData.name] : [
+          {
+            nickName,
+            pokemon: pokemonData.name,
+            image: pokemonData.sprites.front_default
+          }
+        ]
+      }
+      global.localStorage.setItem("pokemons", JSON.stringify(payload))
+      setNickName("")
+      setTriggerNick(false)
+      setModalText(`Contratulations, you've got ${pokemonData.name}. Currently you have ${1} in your list`)
+    }
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
   const onClose = () => {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
+  }
+
+  const handleChangeNick = (e) => {
+    setNickName(e.target.value)
   }
 
   if (loading) return <nav>Loading...</nav>
@@ -142,6 +175,16 @@ export default function PokemonTemplates ({
         text-decoration: none;
         cursor: pointer;
       }
+
+      .nick__wrapper {
+        display: flex;
+        flex-direction: column;
+
+        &_input {
+          margin-bottom: 8px;
+          padding: 4px;
+        }
+      }
     `}
     >
       <div>
@@ -160,9 +203,16 @@ export default function PokemonTemplates ({
           <div><b>{pokemonData.name}</b></div>
         </div>
         <div className="button__wrapper">
-          <button 
+          {!triggerInputNick ? <button 
             onClick={onCatch}
-            className="button__wrapper_button">Catch</button>
+            className="button__wrapper_button">Catch</button> : 
+            <div className="nick__wrapper">
+              <input onChange={handleChangeNick} className="nick__wrapper_input" placeholder="Input Nick Name" />
+              <button 
+                onClick={onSavePokemon}
+                className="button__wrapper_button">Catch and add nickname</button>
+            </div>
+          }
         </div>
         <div className="detail__section">
           <div css={css`
